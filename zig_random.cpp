@@ -10,8 +10,15 @@ unsigned long splitmix64rng(unsigned long &seed) {
 unsigned long left_rotate(unsigned long src, unsigned long magnitude){
     return (src << magnitude) | (src >> (64 - magnitude));
 };
+Xoshiro512StarStarRandom::Xoshiro512StarStarRandom() {
+    this->initialize_state(30984686UL);
+}
 
-void Xoshitro512StarStarRandom::initialize_state(unsigned long seed){
+Xoshiro512StarStarRandom::Xoshiro512StarStarRandom(unsigned long seed) {
+    this->initialize_state(seed);
+}
+
+void Xoshiro512StarStarRandom::initialize_state(unsigned long seed){
     /*hash the seed to set the intial state*/
     this->_s0 = splitmix64rng(seed);
     this->_s1 = splitmix64rng(seed);
@@ -24,7 +31,11 @@ void Xoshitro512StarStarRandom::initialize_state(unsigned long seed){
     return; 
 };
 
-unsigned long Xoshitro512StarStarRandom::next_ulong(void){
+double Xoshiro512StarStarRandom::next_double(void) {
+    return (next_ulong() >> 11) * this->incr_double;
+}
+
+unsigned long Xoshiro512StarStarRandom::next_ulong(void) {
     /*new set of random bits*/
     unsigned long result = left_rotate(this->_s1 * 5, 7) * 9;
 
@@ -43,3 +54,8 @@ unsigned long Xoshitro512StarStarRandom::next_ulong(void){
 
     return result;
 };
+
+double Xoshiro512StarStarRandom::rand_0E1I(void) {
+    /*Return a number between 0 excluded 1 inclusive*/
+    return (next_ulong() >> 11) * this->incr_double + this->incr_double;
+}
