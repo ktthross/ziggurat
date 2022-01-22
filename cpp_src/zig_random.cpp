@@ -32,11 +32,6 @@ void Xoshiro512StarStarRandom::initialize_state(unsigned long seed){
     return; 
 };
 
-unsigned int Xoshiro512StarStarRandom::next_uint(void) {
-    /*New set of 32 random bits*/
-    return (unsigned int)this->next_ulong();
-}
-
 unsigned long Xoshiro512StarStarRandom::next_ulong(void) {
     /*new set of 64 random bits*/
     unsigned long result = left_rotate(this->_s1 * 5UL, 7) * 9UL;
@@ -57,9 +52,14 @@ unsigned long Xoshiro512StarStarRandom::next_ulong(void) {
     return result;
 };
 
+unsigned int Xoshiro512StarStarRandom::next_uint(void) {
+    /*New set of 32 random bits*/
+    return (unsigned int)this->next_ulong();
+}
+
 double Xoshiro512StarStarRandom::rand_0I1E(void) {
     /*Return a number between [0, 1)*/
-    return next_ulong() * this->incr_double;
+    return this->next_ulong() * this->incr_double;
 }
 
 double Xoshiro512StarStarRandom::rand_0E1I(void) {
