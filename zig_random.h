@@ -2,7 +2,7 @@
 #define ZRAND_H
 
 unsigned long splitmix64rng(unsigned long &);
-unsigned long left_rotate(unsigned long, unsigned long);
+unsigned long left_rotate(unsigned long, int);
 
 class Xoshiro512StarStarRandom {
     private:
@@ -14,8 +14,9 @@ class Xoshiro512StarStarRandom {
         Xoshiro512StarStarRandom(unsigned long);
         void initialize_state(unsigned long);
         unsigned long next_ulong(void);
-        double next_double(void);
+        unsigned int next_uint(void);
         double rand_0E1I(void);
+        double rand_0I1E(void);
 };
 
 #endif

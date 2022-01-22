@@ -1,15 +1,16 @@
 #include "zig_random.h"
 
 unsigned long splitmix64rng(unsigned long &seed) {
-    unsigned long seed_split = (seed += 0x9E3779B97F4A7C15UL);
-    seed_split = (seed_split ^ (seed_split >> 30)) * 0xBF58476D1CE4E5B9UL;
-    seed_split = (seed_split ^ (seed_split >> 27)) * 0x94D049BB133111EBUL;
-    return seed_split ^ (seed_split >> 31);
+    unsigned long ssplit = (seed += 0x9E3779B97F4A7C15UL);
+    ssplit = (ssplit ^ (ssplit >> 30)) * 0xBF58476D1CE4E5B9UL;
+    ssplit = (ssplit ^ (ssplit >> 27)) * 0x94D049BB133111EBUL;
+    return ssplit ^ (ssplit >> 31);
 }
 
-unsigned long left_rotate(unsigned long src, unsigned long magnitude){
+unsigned long left_rotate(unsigned long src, int magnitude) {
     return (src << magnitude) | (src >> (64 - magnitude));
-};
+}
+
 Xoshiro512StarStarRandom::Xoshiro512StarStarRandom() {
     this->initialize_state(30984686UL);
 }
@@ -31,13 +32,14 @@ void Xoshiro512StarStarRandom::initialize_state(unsigned long seed){
     return; 
 };
 
-double Xoshiro512StarStarRandom::next_double(void) {
-    return (next_ulong() >> 11) * this->incr_double;
+unsigned int Xoshiro512StarStarRandom::next_uint(void) {
+    /*New set of 32 random bits*/
+    return (unsigned int)this->next_ulong();
 }
 
 unsigned long Xoshiro512StarStarRandom::next_ulong(void) {
-    /*new set of random bits*/
-    unsigned long result = left_rotate(this->_s1 * 5, 7) * 9;
+    /*new set of 64 random bits*/
+    unsigned long result = left_rotate(this->_s1 * 5UL, 7) * 9UL;
 
     /*Update the state*/
     unsigned long tmp = this->_s1 << 11;
@@ -55,7 +57,12 @@ unsigned long Xoshiro512StarStarRandom::next_ulong(void) {
     return result;
 };
 
+double Xoshiro512StarStarRandom::rand_0I1E(void) {
+    /*Return a number between [0, 1)*/
+    return next_ulong() * this->incr_double;
+}
+
 double Xoshiro512StarStarRandom::rand_0E1I(void) {
-    /*Return a number between 0 excluded 1 inclusive*/
-    return (next_ulong() >> 11) * this->incr_double + this->incr_double;
+    /*Return a number between (0, 1]*/
+    return this->rand_0I1E() + this->incr_double;
 }
