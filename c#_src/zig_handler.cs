@@ -1,14 +1,14 @@
-using ziggurat;
+using System;
 
-class ZigHandler {
-    static public Main() {
+public class ZigHandler {
+    static public void Main() {
         int sections = 10;
         double[] count = new double[sections];
         double generated;
         int samples = 10000;
         Ziggurat zig = new Ziggurat();
-        printf("\n\n\n\n\n");
-        printf("          Entering Ziggurat distribution generator\n");
+        Console.WriteLine("\n\n\n\n\n");
+        Console.WriteLine("          Entering Ziggurat distribution generator");
 
         for (int itr = 0; itr < sections; itr++) {
             count[itr] = 0.0;
@@ -43,30 +43,30 @@ class ZigHandler {
           count[itr] /= samples;
         }
 
-        Console.WriteLine("          Sampled " + samples + " points\n");
+        Console.WriteLine("          Sampled " + samples + " points");
         for (int itr = 0; itr < sections; itr++) {
           if (itr == 0) {
-            Console.WriteLine("           <-4         " + count[itr] + "\n");
+            Console.WriteLine("           <-4         " + count[itr]);
           } else if (itr == 1) { 
-            Console.WriteLine("            -4         " + count[itr] + "\n");
+            Console.WriteLine("            -4         " + count[itr]);
           } else if (itr == 2) { 
-            Console.WriteLine("            -3         " + count[itr] + "\n");
+            Console.WriteLine("            -3         " + count[itr]);
           } else if (itr == 3) { 
-            Console.WriteLine("            -2         " + count[itr] + "\n");
+            Console.WriteLine("            -2         " + count[itr]);
           } else if (itr == 4) { 
-            Console.WriteLine("            -1         " + count[itr] + "\n");
+            Console.WriteLine("            -1         " + count[itr]);
           } else if (itr == 5) { 
-            Console.WriteLine("            +1         " + count[itr] + "\n");
+            Console.WriteLine("            +1         " + count[itr]);
           } else if (itr == 6) { 
-            Console.WriteLine("            +2         " + count[itr] + "\n");
+            Console.WriteLine("            +2         " + count[itr]);
           } else if (itr == 7) { 
-            Console.WriteLine("            +3         " + count[itr] + "\n");
+            Console.WriteLine("            +3         " + count[itr]);
           } else if (itr == 8) { 
-            Console.WriteLine("            +4         " + count[itr] + "\n");
+            Console.WriteLine("            +4         " + count[itr]);
           } else if (itr == 9) { 
-            Console.WriteLine("           >+4         " + count[itr] + "\n");
+            Console.WriteLine("           >+4         " + count[itr]);
           }
         }
-        Console.WriteLine("\n\n\n\n\n");
+        Console.WriteLine("\n\n\n\n");
     }
 }
