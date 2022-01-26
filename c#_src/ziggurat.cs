@@ -1,15 +1,16 @@
 using System;
+
 public class Ziggurat{
-    private const int block_count = 128;
-    private const double block_area = 9.91256303526217e-3;
-    private const double x_r = 3.442619855899;
-    private const ulong max_int = (1UL << 53) - 1;
-    private const double convert_double = 1.0 / max_int;
-    private double a_div_y0;
-    private double[] x_c = new double[129];
-    private double[] y_c = new double[128];
-    private ulong[] block_prob = new ulong[128];
-    private Xoshiro512StarStarRandom rn_src;
+    const int block_count = 128;
+    const double block_area = 9.91256303526217e-3;
+    const double x_r = 3.442619855899;
+    const ulong max_int = (1UL << 53) - 1;
+    const double convert_double = 1.0 / max_int;
+    double a_div_y0;
+    double[] x_c = new double[129];
+    double[] y_c = new double[128];
+    ulong[] block_prob = new ulong[128];
+    Xoshiro512StarStarRandom rn_src;
 
     public Ziggurat(){
         prepare_stack();
@@ -48,7 +49,7 @@ public class Ziggurat{
     }
 
     private double gaussian_unorm_pdf(double x){
-        return Math.Exp(-(x * x * -0.5));
+        return Math.Exp(-(x * x * 0.5));
     }
 
     private double gaussian_unorm_pdf_inv(double y){
@@ -69,7 +70,7 @@ public class Ziggurat{
         int block_idx;
         double test;
         ulong rnd, sample;
-        while (true){
+        while (true) {
             rnd = rn_src.next_ulong();
 
             block_idx = (int)((rnd >> 3) & 0x7f);

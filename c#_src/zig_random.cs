@@ -36,7 +36,7 @@ public class Xoshiro512StarStarRandom {
 
     public ulong next_ulong(){
         /*Get 64 bits*/
-        ulong result = Utils.left_rotate(this._s1 * 5UL, 7) * 9UL;
+        ulong result = Utils.left_rotate(_s1 * 5UL, 7) * 9UL;
 
         /*Update the state*/
         ulong tmp = _s1 << 11;
@@ -61,7 +61,7 @@ public class Xoshiro512StarStarRandom {
 
     public double rand_0I1E() {
         /*Random double between [0, 1)*/
-        return next_ulong() * Xoshiro512StarStarRandom.incr_double;
+        return (double)next_ulong() * Xoshiro512StarStarRandom.incr_double;
     }
 
     public double rand_0E1I() {

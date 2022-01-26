@@ -5,7 +5,7 @@ public class ZigHandler {
         int sections = 10;
         double[] count = new double[sections];
         double generated;
-        int samples = 10000;
+        int samples = 8000000;
         Ziggurat zig = new Ziggurat();
         Console.WriteLine("\n\n\n\n\n");
         Console.WriteLine("          Entering Ziggurat distribution generator");
@@ -15,7 +15,7 @@ public class ZigHandler {
         }
 
         for (int itr = 0; itr < samples; itr++) {
-            generated = zig.gen_instance(0.0, 1.0);
+            generated = zig.gen_instance();
             if (generated < -4.0) {
               count[0] += 1.0;
             } else if (generated < -3.0) {
